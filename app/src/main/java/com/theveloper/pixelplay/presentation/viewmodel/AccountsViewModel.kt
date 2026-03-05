@@ -1,6 +1,9 @@
 package com.theveloper.pixelplay.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.theveloper.pixelplay.data.preferences.MrbifyAuthManager
+import com.theveloper.pixelplay.data.repository.MrbifyRepository
+import com.theveloper.pixelplay.data.network.mrbify.MrbifyUser
 import androidx.lifecycle.viewModelScope
 import com.theveloper.pixelplay.data.gdrive.GDriveRepository
 import com.theveloper.pixelplay.data.netease.NeteaseRepository
@@ -40,11 +43,6 @@ data class AccountsUiState(
     val connectedAccounts: List<ExternalAccountUiModel> = emptyList(),
     val disconnectedServices: List<ExternalServiceAccount> = emptyList()
 )
-
-import com.theveloper.pixelplay.data.preferences.MrbifyAuthManager
-import com.theveloper.pixelplay.data.repository.MrbifyRepository
-import com.theveloper.pixelplay.data.network.mrbify.MrbifyUser
-
 @HiltViewModel
 class AccountsViewModel @Inject constructor(
     private val telegramRepository: TelegramRepository,

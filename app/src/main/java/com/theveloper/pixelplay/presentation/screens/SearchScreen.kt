@@ -13,6 +13,8 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import com.theveloper.pixelplay.data.network.mrbify.MrbifySearchResponse
+import com.theveloper.pixelplay.data.network.mrbify.toSong
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -614,10 +616,6 @@ fun EmptySearchResults(searchQuery: String, colorScheme: ColorScheme) {
         )
     }
 }
-
-
-import com.theveloper.pixelplay.data.network.mrbify.MrbifySearchResponse
-import com.theveloper.pixelplay.data.network.mrbify.toSong
 
 @androidx.annotation.OptIn(UnstableApi::class)
 @Composable

@@ -1,6 +1,9 @@
 package com.theveloper.pixelplay.presentation.viewmodel
 
 import android.os.Trace
+import com.theveloper.pixelplay.data.preferences.MrbifyAuthManager
+import com.theveloper.pixelplay.data.repository.MrbifyRepository
+import com.theveloper.pixelplay.data.network.mrbify.toSong
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import androidx.compose.ui.graphics.toArgb
@@ -30,11 +33,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val ENABLE_FOLDERS_STORAGE_FILTER = false
-
-import com.theveloper.pixelplay.data.preferences.MrbifyAuthManager
-import com.theveloper.pixelplay.data.repository.MrbifyRepository
-import com.theveloper.pixelplay.data.network.mrbify.toSong
-
 /**
  * Manages the data state of the music library: Songs, Albums, Artists, Folders.
  * Handles loading from Repository and applying SortOptions.
