@@ -315,7 +315,8 @@ private fun ConnectedAccountCard(
     onManage: () -> Unit,
     onLogout: () -> Unit
 ) {
-    val palette = servicePalette(account.service)
+    val isDark = androidx.compose.foundation.isSystemInDarkTheme()
+    val palette = servicePalette(account.service, isDark)
     val isComingSoon = account.service == ExternalServiceAccount.GOOGLE_DRIVE
     val cardShape = AbsoluteSmoothCornerShape(28.dp, 60)
 
@@ -526,7 +527,7 @@ private data class ServicePalette(
 )
 
 @Composable
-private fun servicePalette(service: ExternalServiceAccount): ServicePalette {
+private fun servicePalette(service: ExternalServiceAccount, isDark: Boolean): ServicePalette {
     return when (service) {
         ExternalServiceAccount.TELEGRAM -> ServicePalette(
             iconContainer = MaterialTheme.colorScheme.primaryContainer,
@@ -576,8 +577,8 @@ private fun accountIcon(service: ExternalServiceAccount): ImageVector {
         ExternalServiceAccount.TELEGRAM -> Icons.AutoMirrored.Rounded.Send
         ExternalServiceAccount.GOOGLE_DRIVE -> Icons.Rounded.CloudQueue
         ExternalServiceAccount.NETEASE -> Icons.Rounded.MusicNote
-        ExternalServiceAccount.QQ_MUSIC -> Icons.Rounded.Audiotrack
-        ExternalServiceAccount.MRBIFY -> Icons.Rounded.AccountCircle
+        ExternalServiceAccount.QQ_MUSIC -> Icons.Rounded.MusicNote
+        ExternalServiceAccount.MRBIFY -> Icons.Rounded.CloudQueue
     }
 }
 

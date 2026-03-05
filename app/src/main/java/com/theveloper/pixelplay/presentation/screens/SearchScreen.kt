@@ -678,16 +678,16 @@ fun SearchResultsList(
                     androidx.compose.material3.CircularProgressIndicator(modifier = Modifier.size(24.dp))
                 }
             }
-        } else if (mrbifyResults != null && mrbifyResults.tracks.data.isNotEmpty()) {
+        } else if (mrbifyResults != null && mrbifyResults.tracks.isNotEmpty()) {
             item(key = "header_mrbify_online") {
                 SearchResultSectionHeader(title = "Online (mrbify)")
             }
-            items(mrbifyResults.tracks.data) { track ->
+            items(mrbifyResults.tracks) { track ->
                 val song = track.toSong()
                 val rememberedOnClick = remember(song, playerViewModel, onItemSelected) {
                     {
-                        val songList = mrbifyResults.tracks.data.map { it.toSong() }
-                        playerViewModel.playSongsWithIndex(songList, songList.indexOf(song), "mrbify Search")
+                        val songList = mrbifyResults.tracks.map { it.toSong() }
+                        playerViewModel.playSongs(songList, song, "mrbify Search")
                         onItemSelected()
                     }
                 }

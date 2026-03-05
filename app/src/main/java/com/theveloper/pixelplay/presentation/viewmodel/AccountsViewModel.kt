@@ -86,8 +86,8 @@ class AccountsViewModel @Inject constructor(
         connected to playlistCount
     }
 
-    private val mrbifyStateFlow = mrbifyAuthManager.currentUserFlow.map { user ->
-        user != null to user
+    private val mrbifyStateFlow: kotlinx.coroutines.flow.Flow<Pair<Boolean, MrbifyUser?>> = mrbifyAuthManager.currentUserFlow.map { user ->
+        Pair(user != null, user)
     }
 
     val uiState: StateFlow<AccountsUiState> = combine(
@@ -95,15 +95,15 @@ class AccountsViewModel @Inject constructor(
         gDriveStateFlow,
         neteaseStateFlow,
         qqMusicStateFlow,
-        mrbifyStateFlow,
-        loggingOutServices
-    ) { params ->
-        val (telegramConnected, telegramChannelCount) = params[0] as Pair<Boolean, Int>
-        val (gDriveConnected, gDriveFolderCount) = params[1] as Pair<Boolean, Int>
-        val (neteaseConnected, neteasePlaylistCount) = params[2] as Pair<Boolean, Int>
-        val (qqConnected, qqPlaylistCount) = params[3] as Pair<Boolean, Int>
-        val (mrbifyConnected, mrbifyUser) = params[4] as Pair<Boolean, MrbifyUser?>
-        val activeLogouts = params[5] as Set<ExternalServiceAccount>
+        mrbifyStateFlow
+    ) { telegram, gdrive, netease, qq, mrbify ->
+        AccountsStateData(telegram, gdrive, netease, qq, mrbify)
+    }.combine(loggingOutServices) { accountsData, activeLogouts ->
+        val (telegramConnected, telegramChannelCount) = accountsData.telegram
+        val (gDriveConnected, gDriveFolderCount) = accountsData.gdrive
+        val (neteaseConnected, neteasePlaylistCount) = accountsData.netease
+        val (qqConnected, qqPlaylistCount) = accountsData.qq
+        val (mrbifyConnected, mrbifyUser) = accountsData.mrbify
 
         val connectedAccounts = buildList {
             if (telegramConnected) {
@@ -179,7 +179,7 @@ class AccountsViewModel @Inject constructor(
                     ExternalAccountUiModel(
                         service = ExternalServiceAccount.MRBIFY,
                         title = "mrbify",
-                        accountLabel = mrbifyUser?.email ?: "mrbify Account Connected",
+                        accountLabel = mrbifyUser?.username ?: "mrbify Account Connected",
                         syncedContentLabel = "Cloud Libraries Linked",
                         isLoggingOut = ExternalServiceAccount.MRBIFY in activeLogouts
                     )
@@ -234,3 +234,11 @@ class AccountsViewModel @Inject constructor(
         }
     }
 }
+
+private data class AccountsStateData(
+    val telegram: Pair<Boolean, Int>,
+    val gdrive: Pair<Boolean, Int>,
+    val netease: Pair<Boolean, Int>,
+    val qq: Pair<Boolean, Int>,
+    val mrbify: Pair<Boolean, MrbifyUser?>
+)

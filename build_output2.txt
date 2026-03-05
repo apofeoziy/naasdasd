@@ -1,0 +1,73 @@
+Reusing configuration cache.
+> Task :app:preBuild UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:preBuild UP-TO-DATE
+> Task :shared:preDebugBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :shared:writeDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :shared:javaPreCompileDebug UP-TO-DATE
+> Task :shared:processDebugNavigationResources UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :shared:generateDebugResValues UP-TO-DATE
+> Task :shared:extractDeepLinksDebug UP-TO-DATE
+> Task :shared:processDebugManifest UP-TO-DATE
+> Task :shared:generateDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :shared:packageDebugResources UP-TO-DATE
+> Task :shared:compileDebugLibraryResources UP-TO-DATE
+> Task :shared:parseDebugLocalResources UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :shared:generateDebugRFile UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :shared:compileDebugKotlin UP-TO-DATE
+> Task :shared:compileDebugJavaWithJavac NO-SOURCE
+> Task :shared:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:kspDebugKotlin
+> Task :app:compileDebugKotlin
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/PixelPlayApplication.kt:116:42 'static field TRIM_MEMORY_RUNNING_CRITICAL: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:5:8 'class Virtualizer : AudioEffect' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:33:30 'class Virtualizer : AudioEffect' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:199:35 'constructor(p0: Int, p1: Int): Virtualizer' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:201:29 'val strengthSupported: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:202:29 'fun setStrength(p0: Short): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:349:21 'val strengthSupported: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:350:21 'fun setStrength(p0: Short): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:441:21 'val strengthSupported: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/equalizer/EqualizerManager.kt:442:21 'fun setStrength(p0: Short): Unit' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/service/http/MediaFileHttpServerService.kt:573:45 'val allNetworks: Array<(out) Network!>' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/service/player/SurroundDownmixProcessor.kt:121:18 This declaration overrides a deprecated member but is not marked as deprecated itself. Please add the '@Deprecated' annotation or suppress the diagnostic.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/service/wear/WearCommandReceiver.kt:1204:53 'var isBluetoothA2dpOn: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/service/wear/WearCommandReceiver.kt:1204:87 'var isBluetoothScoOn: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/service/wear/WearCommandReceiver.kt:1222:49 'var isWiredHeadsetOn: Boolean' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/components/EditSongSheet.kt:887:37 Condition is always 'true'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/components/PlaylistCreationDialogs.kt:174:57 'val Icons.Rounded.PlaylistAdd: ImageVector' is deprecated. Use the AutoMirrored version at Icons.AutoMirrored.Rounded.PlaylistAdd.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/components/ReorderTabsSheet.kt:122:41 'static field FLAG_IGNORE_GLOBAL_SETTING: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:101:67 Unchecked cast of 'kotlin.Any' to 'kotlin.Pair<kotlin.Boolean, kotlin.Int>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:102:62 Unchecked cast of 'kotlin.Any' to 'kotlin.Pair<kotlin.Boolean, kotlin.Int>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:103:66 Unchecked cast of 'kotlin.Any' to 'kotlin.Pair<kotlin.Boolean, kotlin.Int>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:104:56 Unchecked cast of 'kotlin.Any' to 'kotlin.Pair<kotlin.Boolean, kotlin.Int>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:105:55 Unchecked cast of 'kotlin.Any' to 'kotlin.Pair<kotlin.Boolean, com.theveloper.pixelplay.data.network.mrbify.MrbifyUser?>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:106:39 Unchecked cast of 'kotlin.Any' to 'kotlin.collections.Set<com.theveloper.pixelplay.presentation.viewmodel.ExternalServiceAccount>'.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/ConnectivityStateHolder.kt:261:38 'val connectionInfo: WifiInfo!' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/MrbifySearchStateHolder.kt:62:18 This declaration is in a preview state and can be changed in a backwards-incompatible manner with a best-effort migration. Its usage should be marked with '@kotlinx.coroutines.FlowPreview' or '@OptIn(kotlinx.coroutines.FlowPreview::class)' if you accept the drawback of relying on preview API
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/SearchStateHolder.kt:81:18 This declaration is in a preview state and can be changed in a backwards-incompatible manner with a best-effort migration. Its usage should be marked with '@kotlinx.coroutines.FlowPreview' or '@OptIn(kotlinx.coroutines.FlowPreview::class)' if you accept the drawback of relying on preview API
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/ui/theme/Theme.kt:100:20 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/utils/AlbumArtUtils.kt:186:9 This is a delicate API and its use requires care. Make sure you fully read and understand documentation of the declaration that is marked as a delicate API.
+w: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/utils/LyricsUtils.kt:275:5 'fun ClickableText(text: AnnotatedString, modifier: Modifier = ..., style: TextStyle = ..., softWrap: Boolean = ..., overflow: TextOverflow = ..., maxLines: Int = ..., onTextLayout: (TextLayoutResult) -> Unit = ..., onClick: (Int) -> Unit): Unit' is deprecated. Use Text or BasicText and pass an AnnotatedString that contains a LinkAnnotation. Check LinkAnnotation's documentation for more details and samples.
+
+BUILD SUCCESSFUL in 2m 19s
+31 actionable tasks: 2 executed, 29 up-to-date
+Configuration cache entry reused.

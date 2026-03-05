@@ -1,0 +1,114 @@
+Reusing configuration cache.
+> Task :shared:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :shared:preDebugBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :shared:generateDebugResValues UP-TO-DATE
+> Task :shared:processDebugNavigationResources UP-TO-DATE
+> Task :shared:javaPreCompileDebug UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :shared:writeDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :shared:generateDebugResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :shared:processDebugManifest UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :shared:extractDeepLinksDebug UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :shared:packageDebugResources UP-TO-DATE
+> Task :shared:compileDebugLibraryResources UP-TO-DATE
+> Task :shared:parseDebugLocalResources UP-TO-DATE
+> Task :shared:generateDebugRFile UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:processDebugNavigationResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:compileDebugNavigationResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :shared:compileDebugKotlin UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :shared:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :shared:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:kspDebugKotlin UP-TO-DATE
+
+> Task :app:compileDebugKotlin FAILED
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:2:44 Unresolved reference 'SongSource'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:3:44 Unresolved reference 'SongSource'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:9:5 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:12:40 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:12:45 Unresolved reference 'source'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:12:55 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:12:60 Unresolved reference 'id'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:15:22 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:15:27 Unresolved reference 'duration'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:18:14 Argument type mismatch: actual type is 'kotlin.String', but 'kotlin.String' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:19:17 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:19:22 Unresolved reference 'title'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:20:23 Argument type mismatch: actual type is 'kotlin.Int', but 'kotlin.Int' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:21:16 Argument type mismatch: actual type is 'kotlin.Int', but 'kotlin.Int' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:23:9 No parameter with name 'data' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:24:24 Argument type mismatch: actual type is 'kotlin.Long', but 'kotlin.Long' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:25:19 Argument type mismatch: actual type is 'kotlin.Long', but 'kotlin.Long' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:26:9 No parameter with name 'albumName' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:27:20 Argument type mismatch: actual type is 'kotlin.Long', but 'kotlin.Long' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:28:9 No parameter with name 'artistName' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:28:22 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:28:27 Unresolved reference 'artist'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:29:9 No parameter with name 'composer' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:30:23 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:30:28 Unresolved reference 'artist'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:31:28 Argument type mismatch: actual type is 'kotlin.String', but 'kotlin.String' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:32:9 No parameter with name 'size' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:33:19 Argument type mismatch: actual type is 'kotlin.Int', but 'kotlin.Int?' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:34:22 Argument type mismatch: actual type is 'kotlin.Int', but 'kotlin.Int?' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:35:9 No parameter with name 'format' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:36:9 No parameter with name 'folderName' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:37:29 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:37:29 Argument type mismatch: actual type is 'T?', but 'kotlin.String?' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:37:34 Unresolved reference 'coverUrl'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:37:43 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:37:50 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:38:9 No parameter with name 'source' found.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:38:18 Unresolved reference 'SongSource'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:39:22 Argument type mismatch: actual type is 'kotlin.Boolean', but 'kotlin.Boolean' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:40:17 Argument type mismatch: actual type is 'kotlin.String', but 'kotlin.String' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:41:16 Argument type mismatch: actual type is 'kotlin.String', but 'kotlin.String' was expected.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:42:9 No value passed for parameter 'mimeType'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:42:18 Unresolved reference 'MrbifyTrack'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/data/network/mrbify/MrbifyTrackExtensions.kt:42:23 Unresolved reference 'artist'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/AccountsScreen.kt:580:84 Unresolved reference 'PlayCircle'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/AccountsScreen.kt:581:82 Unresolved reference 'AccountCircle'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/SearchScreen.kt:17:53 Unresolved reference 'toSong'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/SearchScreen.kt:686:34 Unresolved reference 'toSong'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/SearchScreen.kt:689:61 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/SearchScreen.kt:689:70 Unresolved reference 'toSong'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/screens/SearchScreen.kt:690:41 Unresolved reference 'playSongsWithIndex'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/AccountsViewModel.kt:182:52 Unresolved reference 'user'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/LibraryStateHolder.kt:6:53 Unresolved reference 'toSong'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/LibraryStateHolder.kt:216:50 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/LibraryStateHolder.kt:216:59 Unresolved reference 'toSong'.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/LibraryStateHolder.kt:252:50 Cannot infer type for this parameter. Please specify it explicitly.
+e: file:///C:/Users/drewax/Documents/GitHub/naasdasd/app/src/main/java/com/theveloper/pixelplay/presentation/viewmodel/LibraryStateHolder.kt:252:59 Unresolved reference 'toSong'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 17s
+31 actionable tasks: 1 executed, 30 up-to-date
+Configuration cache entry reused.

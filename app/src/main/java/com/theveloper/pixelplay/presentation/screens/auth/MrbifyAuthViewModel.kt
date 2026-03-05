@@ -47,7 +47,8 @@ class MrbifyAuthViewModel @Inject constructor(
         _uiState.update { it.copy(isLoggingIn = true, loginError = null) }
 
         viewModelScope.launch {
-            val result = mrbifyAuthManager.login(email, password)
+            val request = com.theveloper.pixelplay.data.network.mrbify.MrbifyLoginRequest(email, password)
+            val result = mrbifyAuthManager.login(request)
             if (result.isSuccess) {
                 _uiState.update { it.copy(isLoggingIn = false, isSuccess = true) }
             } else {

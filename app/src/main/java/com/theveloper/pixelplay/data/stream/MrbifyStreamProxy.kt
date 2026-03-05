@@ -94,17 +94,4 @@ class MrbifyStreamProxy @Inject constructor(
         if (!validateId(id)) return null
         return getProxyUrl(id)
     }
-
-    /**
-     * Overrides base extractIdFromUri since mrbify uses the full host or host:port block.
-     */
-    override fun extractIdFromUri(uri: Uri): String? {
-        val authority = uri.authority
-        if (!authority.isNullOrBlank()) {
-            // E.g. "soundcloud:12345" or "soundcloud/12345"
-            return authority.replace("/", ":")
-        }
-        val schemeSpecific = uri.schemeSpecificPart.removePrefix("//")
-        return schemeSpecific.replace("/", ":")
-    }
 }
