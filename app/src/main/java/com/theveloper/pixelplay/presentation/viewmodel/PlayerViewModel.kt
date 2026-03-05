@@ -2542,11 +2542,23 @@ class PlayerViewModel @Inject constructor(
             }
             _isSheetVisible.value = true
 
-            // Pre-resolve the starting song's cloud URI before ExoPlayer touches it.
-            // This populates the resolvedUriCache so resolveDataSpec finds it instantly.
+            // Pre-resolve cloud URIs before ExoPlayer touches them.
+            // Стартовый трек — синхронно (блокируем до готовности), остальные — параллельно в фоне.
+            val cloudSchemes = setOf("telegram", "netease", "qqmusic", "mrbify")
             val startingUri = MediaItemBuilder.playbackUri(effectiveStartSong.contentUriString)
-            if (startingUri.scheme == "telegram" || startingUri.scheme == "netease" || startingUri.scheme == "qqmusic" || startingUri.scheme == "mrbify") {
+            if (startingUri.scheme in cloudSchemes) {
                 dualPlayerEngine.resolveCloudUri(startingUri)
+            }
+            // Параллельно прогреваем кэш для остальных треков (fire-and-forget)
+            viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+                songsToPlay
+                    .filter { it.id != effectiveStartSong.id }
+                    .forEach { song ->
+                        val uri = MediaItemBuilder.playbackUri(song.contentUriString)
+                        if (uri.scheme in cloudSchemes) {
+                            dualPlayerEngine.resolveCloudUri(uri)
+                        }
+                    }
             }
 
             val playSongsAction = {

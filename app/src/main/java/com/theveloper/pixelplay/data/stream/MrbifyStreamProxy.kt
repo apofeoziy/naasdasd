@@ -112,6 +112,18 @@ class MrbifyStreamProxy @Inject constructor(
         return "$source/$trackId"
     }
 
+    /**
+     * Прогревает кэш стрим URL для данного mrbify URI, чтобы при обращении ExoPlayer
+     * прокси реальный URL уже был в urlCache и не требовал нового API-запроса.
+     */
+    suspend fun warmUpStreamUrl(uriString: String) {
+        val uri = android.net.Uri.parse(uriString)
+        val id = extractIdFromUri(uri) ?: return
+        val parsedId = parseRouteParam(id) ?: return
+        if (!validateId(parsedId)) return
+        getOrFetchStreamUrl(parsedId) // заполняет urlCache
+    }
+
     fun resolveMrbifyUri(uriString: String): String? {
         // Delegate to the base class resolveUri which uses extractIdFromUri internally.
         // extractIdFromUri now correctly handles all ID formats via schemeSpecificPart.

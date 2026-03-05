@@ -524,9 +524,9 @@ class DualPlayerEngine @Inject constructor(
             }
         }
 
-        // For mrbify, the URL is pre-fetched on-demand within the proxy cache miss.
-        // It isn't necessarily warm-up-able unless we explicitly add a warm-up method, 
-        // but proxy.resolveMrbifyUri handles generating the localhost proxy URL instantly.
+        // Прогреваем urlCache прокси заранее, чтобы ExoPlayer не ждал API-ответа во время воспроизведения.
+        mrbifyStreamProxy.warmUpStreamUrl(uriString)
+
         val proxyUrl = mrbifyStreamProxy.resolveMrbifyUri(uriString)
         if (!proxyUrl.isNullOrBlank()) {
             return Uri.parse(proxyUrl)
