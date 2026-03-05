@@ -1,5 +1,6 @@
-package com.theveloper.pixelplay.data.network.mrbify
+package com.theveloper.pixelplay.data.repository
 
+import com.theveloper.pixelplay.data.network.mrbify.*
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
