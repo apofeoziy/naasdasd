@@ -526,8 +526,9 @@ object AppModule {
     @Singleton
     fun provideMrbifyStreamProxy(
         repository: com.theveloper.pixelplay.data.repository.MrbifyRepository,
+        authManager: com.theveloper.pixelplay.data.preferences.MrbifyAuthManager,
         okHttpClient: OkHttpClient
     ): com.theveloper.pixelplay.data.stream.MrbifyStreamProxy {
-        return com.theveloper.pixelplay.data.stream.MrbifyStreamProxy(repository, okHttpClient)
+        return com.theveloper.pixelplay.data.stream.MrbifyStreamProxy(repository, authManager, okHttpClient)
     }
 }
