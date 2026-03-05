@@ -41,18 +41,21 @@ class MrbifyStreamProxy @Inject constructor(
         value.takeIf { it.isNotBlank() }
 
     override fun validateId(id: String): Boolean {
-        // ID format: "source:trackId"
-        val parts = id.split(":")
-        return parts.size == 2 && parts[0].isNotBlank() && parts[1].isNotBlank()
+        // ID format: "source:trackId" (trackId itself may contain colons, e.g. Spotify URIs)
+        val colonIndex = id.indexOf(':')
+        if (colonIndex <= 0) return false
+        val source = id.substring(0, colonIndex)
+        val trackId = id.substring(colonIndex + 1)
+        return source.isNotBlank() && trackId.isNotBlank()
     }
 
     override fun formatIdForUrl(id: String): String = id
 
     override suspend fun resolveStreamUrl(id: String): String? {
-        val parts = id.split(":")
-        if (parts.size != 2) return null
-        val source = parts[0]
-        val trackId = parts[1]
+        val colonIndex = id.indexOf(':')
+        if (colonIndex <= 0) return null
+        val source = id.substring(0, colonIndex)
+        val trackId = id.substring(colonIndex + 1)
         
         val response = repository.getStreamUrl(trackId, source).getOrNull()
         return response?.url
@@ -62,11 +65,12 @@ class MrbifyStreamProxy @Inject constructor(
      * mrbify://source:trackId
      */
     override fun extractIdFromUri(uri: Uri): String? {
-        val host = uri.host ?: return null
-        val port = uri.port.takeIf { it != -1 } ?: return null
-        // e.g. mrbify://soundcloud:12345
-        // uri.host = soundcloud, uri.port = 12345
-        return "$host:$port" // Actually, if it's mrbify://soundcloud:12345, the authority handles it natively.
+        // URI format: mrbify://soundcloud:trackId
+        // Android Uri parses host=soundcloud, port=trackId only when trackId is numeric.
+        // For non-numeric IDs (e.g. Spotify), port == -1 and the full authority is "soundcloud:trackId".
+        // Use the raw schemeSpecificPart which is always "//source:trackId" regardless of type.
+        val ssp = uri.schemeSpecificPart?.removePrefix("//") ?: return null
+        return ssp.takeIf { it.contains(":") && it.isNotBlank() }
     }
 
     fun resolveMrbifyUri(uriString: String): String? {
