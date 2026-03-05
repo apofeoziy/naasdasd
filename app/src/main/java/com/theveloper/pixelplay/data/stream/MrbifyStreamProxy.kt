@@ -1,7 +1,9 @@
 package com.theveloper.pixelplay.data.stream
 
 import android.net.Uri
+import com.theveloper.pixelplay.data.preferences.MrbifyAuthManager
 import com.theveloper.pixelplay.data.repository.MrbifyRepository
+import kotlinx.coroutines.flow.firstOrNull
 import okhttp3.OkHttpClient
 import timber.log.Timber
 import javax.inject.Inject
@@ -10,6 +12,7 @@ import javax.inject.Singleton
 @Singleton
 class MrbifyStreamProxy @Inject constructor(
     private val repository: MrbifyRepository,
+    private val authManager: MrbifyAuthManager,
     okHttpClient: OkHttpClient
 ) : CloudStreamProxy<String>(okHttpClient) {
 
@@ -82,8 +85,15 @@ class MrbifyStreamProxy @Inject constructor(
         if (colonIndex <= 0) return null
         val source = id.substring(0, colonIndex)
         val trackId = id.substring(colonIndex + 1)
-        
-        val response = repository.getStreamUrl(trackId, source).getOrNull()
+
+        // Yandex требует токен для стриминга. Токен хранится в MrbifyUser.token.
+        val yandexToken: String? = if (source == "yandex") {
+            authManager.currentUserFlow.firstOrNull()?.token
+        } else {
+            null
+        }
+
+        val response = repository.getStreamUrl(trackId, source, yandexToken).getOrNull()
         return response?.url
     }
 
@@ -97,19 +107,6 @@ class MrbifyStreamProxy @Inject constructor(
         // Use the raw schemeSpecificPart which is always "//source:trackId" regardless of type.
         val ssp = uri.schemeSpecificPart?.removePrefix("//") ?: return null
         return ssp.takeIf { it.contains(":") && it.isNotBlank() }
-    }
-
-    /**
-     * Ktor даёт нам {source} и {trackId...} как отдельные параметры.
-     * Собираем их в "source/trackId" — parseRouteParam затем конвертирует в "source:trackId".
-     */
-    override fun extractIdFromCallParameters(
-        params: io.ktor.server.routing.RoutingCall
-    ): String? {
-        val source = params.parameters["source"] ?: return null
-        val trackId = params.parameters.getAll("trackId")?.joinToString("/") ?: return null
-        if (source.isBlank() || trackId.isBlank()) return null
-        return "$source/$trackId"
     }
 
     /**

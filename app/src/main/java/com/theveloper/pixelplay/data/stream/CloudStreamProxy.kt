@@ -12,6 +12,7 @@ import io.ktor.server.response.respond
 import io.ktor.server.response.respondBytesWriter
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
+import io.ktor.server.request.path
 import io.ktor.utils.io.writeFully
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -147,13 +148,15 @@ abstract class CloudStreamProxy<K : Any>(
     protected open fun extractIdFromUri(uri: Uri): String? = uri.host
 
     /**
-     * Extract the raw ID string from Ktor call parameters.
-     * Default: reads [routeParamName] only.
-     * Override when the ID spans multiple path segments (e.g. source + trackId).
+     * Extract the raw ID string from the request URL path.
+     * The [requestPath] is the full path, e.g. "/mrbify/soundcloud/trackId".
+     * Default: strips [routePrefix] + "/" and returns the rest.
+     * Override for custom multi-segment layouts.
      */
-    protected open fun extractIdFromCallParameters(
-        params: io.ktor.server.routing.RoutingCall
-    ): String? = params.parameters[routeParamName]
+    protected open fun extractRawParamFromPath(requestPath: String): String? {
+        val prefix = "$routePrefix/"
+        return if (requestPath.startsWith(prefix)) requestPath.removePrefix(prefix) else null
+    }
 
     // ─── Internal ──────────────────────────────────────────────────────
 
@@ -170,7 +173,7 @@ abstract class CloudStreamProxy<K : Any>(
         return embeddedServer(CIO, host = "127.0.0.1", port = port) {
             routing {
                 get(routePath) {
-                    val rawParam = extractIdFromCallParameters(call)
+                    val rawParam = extractRawParamFromPath(call.request.path())
                     val id = rawParam?.let { parseRouteParam(it) }
                     if (id == null || !validateId(id)) {
                         call.respond(HttpStatusCode.BadRequest, "Invalid ID")

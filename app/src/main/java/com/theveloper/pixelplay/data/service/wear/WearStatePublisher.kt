@@ -19,10 +19,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.max
@@ -36,6 +40,7 @@ import kotlin.math.roundToInt
 @Singleton
 class WearStatePublisher @Inject constructor(
     private val application: Application,
+    private val okHttpClient: OkHttpClient,
 ) {
     private val dataClient by lazy { Wearable.getDataClient(application) }
     private val contentResolver by lazy { application.contentResolver }
@@ -138,10 +143,31 @@ class WearStatePublisher @Inject constructor(
         return playerInfo.albumArtBitmapData
     }
 
+    /**
+     * Opens an InputStream for any URI scheme:
+     * - http/https → OkHttp
+     * - content/file/android.resource → ContentResolver
+     */
+    private fun openInputStreamForUri(uri: Uri): InputStream? {
+        val scheme = uri.scheme?.lowercase()
+        return if (scheme == "http" || scheme == "https") {
+            val request = Request.Builder().url(uri.toString()).build()
+            val response = okHttpClient.newCall(request).execute()
+            if (!response.isSuccessful) {
+                response.close()
+                return null
+            }
+            // Caller is responsible for closing the response body via the stream
+            response.body?.byteStream()
+        } else {
+            contentResolver.openInputStream(uri)
+        }
+    }
+
     private fun readBytesFromUriCapped(uriString: String, maxBytes: Int): ByteArray? {
         return try {
             val uri = Uri.parse(uriString)
-            contentResolver.openInputStream(uri)?.use { input ->
+            openInputStreamForUri(uri)?.use { input ->
                 val buffer = ByteArray(16 * 1024)
                 val output = ByteArrayOutputStream()
                 var total = 0
@@ -261,7 +287,7 @@ class WearStatePublisher @Inject constructor(
 
     private fun decodeBoundedBitmapFromUri(uri: Uri, maxDimension: Int): Bitmap? {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        contentResolver.openInputStream(uri)?.use { stream ->
+        openInputStreamForUri(uri)?.use { stream ->
             BitmapFactory.decodeStream(stream, null, bounds)
         } ?: return null
 
@@ -284,7 +310,7 @@ class WearStatePublisher @Inject constructor(
             inPreferredConfig = Bitmap.Config.ARGB_8888
         }
 
-        val decoded = contentResolver.openInputStream(uri)?.use { stream ->
+        val decoded = openInputStreamForUri(uri)?.use { stream ->
             BitmapFactory.decodeStream(stream, null, decodeOptions)
         } ?: return null
 
