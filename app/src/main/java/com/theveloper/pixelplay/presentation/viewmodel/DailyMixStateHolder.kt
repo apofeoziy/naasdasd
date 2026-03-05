@@ -71,7 +71,8 @@ class DailyMixStateHolder @Inject constructor(
     fun updateDailyMix(allSongsFlow: Flow<List<Song>>, favoriteSongIdsFlow: Flow<Set<String>>) {
         updateJob?.cancel()
         updateJob = scope?.launch(Dispatchers.IO) {
-            val allSongs = musicRepository.getAllSongsOnce()
+            // Use the merged flow (local + mrbify history/likes) instead of DB-only getAllSongsOnce()
+            val allSongs = allSongsFlow.first()
             if (allSongs.isNotEmpty()) {
                 val favoriteIds = favoriteSongIdsFlow.first()
 
@@ -99,13 +100,22 @@ class DailyMixStateHolder @Inject constructor(
         scope?.launch {
             val dailyMixIds = userPreferencesRepository.dailyMixSongIdsFlow.first()
             if (dailyMixIds.isNotEmpty() && _dailyMixSongs.value.isEmpty()) {
-                val songs = withContext(Dispatchers.IO) {
+                // First try Room DB (local songs)
+                val dbSongs = withContext(Dispatchers.IO) {
                     musicRepository.getSongsByIds(dailyMixIds).first()
                 }
-                if (songs.isNotEmpty()) {
-                    // Maintain persisted order
-                    val songMap = songs.associateBy { it.id }
-                    val orderedSongs = dailyMixIds.mapNotNull { songMap[it] }
+                val songMap = dbSongs.associateBy { it.id }.toMutableMap()
+
+                // Fill in any missing IDs (cloud tracks) from the merged allSongsFlow
+                val missingIds = dailyMixIds.filter { it !in songMap }
+                if (missingIds.isNotEmpty()) {
+                    val allSongs = allSongsFlow.first()
+                    val allById = allSongs.associateBy { it.id }
+                    missingIds.forEach { id -> allById[id]?.let { songMap[id] = it } }
+                }
+
+                val orderedSongs = dailyMixIds.mapNotNull { songMap[it] }
+                if (orderedSongs.isNotEmpty()) {
                     _dailyMixSongs.value = orderedSongs.toImmutableList()
                 }
             }
@@ -115,12 +125,20 @@ class DailyMixStateHolder @Inject constructor(
         scope?.launch {
             val yourMixIds = userPreferencesRepository.yourMixSongIdsFlow.first()
             if (yourMixIds.isNotEmpty() && _yourMixSongs.value.isEmpty()) {
-                val songs = withContext(Dispatchers.IO) {
+                val dbSongs = withContext(Dispatchers.IO) {
                     musicRepository.getSongsByIds(yourMixIds).first()
                 }
-                if (songs.isNotEmpty()) {
-                    val songMap = songs.associateBy { it.id }
-                    val orderedSongs = yourMixIds.mapNotNull { songMap[it] }
+                val songMap = dbSongs.associateBy { it.id }.toMutableMap()
+
+                val missingIds = yourMixIds.filter { it !in songMap }
+                if (missingIds.isNotEmpty()) {
+                    val allSongs = allSongsFlow.first()
+                    val allById = allSongs.associateBy { it.id }
+                    missingIds.forEach { id -> allById[id]?.let { songMap[id] = it } }
+                }
+
+                val orderedSongs = yourMixIds.mapNotNull { songMap[it] }
+                if (orderedSongs.isNotEmpty()) {
                     _yourMixSongs.value = orderedSongs.toImmutableList()
                 }
             }

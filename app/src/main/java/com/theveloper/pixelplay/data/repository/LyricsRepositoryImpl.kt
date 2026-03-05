@@ -665,7 +665,10 @@ class LyricsRepositoryImpl @Inject constructor(
      */
     private fun saveLocalLyricsJson(song: Song, lyrics: Lyrics) {
         try {
-            val fileName = "${song.id}.json"
+            // song.id может содержать '/' и ':' (напр. "mrbify://soundcloud:123")
+            // что делает имя файла невалидным на файловой системе.
+            val safeId = song.id.replace(Regex("[/\\\\:*?\"<>|]"), "_")
+            val fileName = "$safeId.json"
             val lyricsDir = File(context.filesDir, "lyrics")
             lyricsDir.mkdirs()
 
@@ -693,7 +696,8 @@ class LyricsRepositoryImpl @Inject constructor(
      */
     private suspend fun loadLocalLyricsJson(song: Song): Lyrics? {
         try {
-            val fileName = "${song.id}.json"
+            val safeId = song.id.replace(Regex("[/\\\\:*?\"<>|]"), "_")
+            val fileName = "$safeId.json"
             val file = File(context.filesDir, "lyrics/$fileName")
             
             if (file.exists()) {
@@ -1085,7 +1089,8 @@ class LyricsRepositoryImpl @Inject constructor(
         
         // Also remove JSON cache
         try {
-            val file = File(context.filesDir, "lyrics/${songId}.json")
+            val safeId = songId.toString().replace(Regex("[/\\\\:*?\"<>|]"), "_")
+            val file = File(context.filesDir, "lyrics/$safeId.json")
             if (file.exists()) file.delete()
         } catch (e: Exception) {
             Log.w(TAG, "Error deleting JSON cache: ${e.message}")

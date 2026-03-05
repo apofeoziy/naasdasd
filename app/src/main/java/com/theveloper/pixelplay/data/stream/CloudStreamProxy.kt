@@ -146,6 +146,15 @@ abstract class CloudStreamProxy<K : Any>(
     /** Extract the raw ID string from a parsed URI. Override for custom URI layouts. */
     protected open fun extractIdFromUri(uri: Uri): String? = uri.host
 
+    /**
+     * Extract the raw ID string from Ktor call parameters.
+     * Default: reads [routeParamName] only.
+     * Override when the ID spans multiple path segments (e.g. source + trackId).
+     */
+    protected open fun extractIdFromCallParameters(
+        params: io.ktor.server.routing.RoutingCall
+    ): String? = params.parameters[routeParamName]
+
     // ─── Internal ──────────────────────────────────────────────────────
 
     protected suspend fun getOrFetchStreamUrl(id: K): String? {
@@ -161,7 +170,7 @@ abstract class CloudStreamProxy<K : Any>(
         return embeddedServer(CIO, host = "127.0.0.1", port = port) {
             routing {
                 get(routePath) {
-                    val rawParam = call.parameters[routeParamName]
+                    val rawParam = extractIdFromCallParameters(call)
                     val id = rawParam?.let { parseRouteParam(it) }
                     if (id == null || !validateId(id)) {
                         call.respond(HttpStatusCode.BadRequest, "Invalid ID")

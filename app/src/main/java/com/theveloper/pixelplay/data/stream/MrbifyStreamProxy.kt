@@ -25,20 +25,36 @@ class MrbifyStreamProxy @Inject constructor(
     override val cacheExpirationMs = 30L * 60 * 1000 // 30 minutes
     override val proxyTag = "MrbifyStreamProxy"
     
-    // Route matching: /mrbify/source/id
-    override val routePath = "/mrbify/{sourceAndId...}"
-    override val routeParamName = "sourceAndId"
+    // Route: /mrbify/{source}/{trackId...}
+    // Двоеточие в URL-пути ненадёжно (некоторые HTTP-стеки его не принимают),
+    // поэтому используем слеш как разделитель source/trackId в URL.
+    // ID внутри приложения по-прежнему хранится как "source:trackId".
+    override val routePath = "/mrbify/{source}/{trackId...}"
+    override val routeParamName = "source" // не используется напрямую; парсинг ниже
     override val uriScheme = "mrbify"
     override val routePrefix = "/mrbify"
 
-    /** 
-     * Parses the route param "source/trackId"
-     * Since Ktor path parameters can contain slashes if using wildcard,
-     * we expect "{source}/{id}" merged. We will encode it as "{source}:{id}" 
-     * in the route param to be simpler.
+    /**
+     * route param приходит как "source" — но нам нужны оба сегмента.
+     * Реальный парсинг делается в createServer через call.parameters, поэтому
+     * здесь parseRouteParam принимает уже собранную строку "source/trackId".
+     * Мы конвертируем её обратно в "source:trackId" (внутренний формат).
      */
-    override fun parseRouteParam(value: String): String? =
-        value.takeIf { it.isNotBlank() }
+    override fun parseRouteParam(value: String): String? {
+        // value приходит в двух форматах:
+        // 1. "source/trackId"  — когда собран вручную из двух параметров
+        // 2. "source:trackId"  — когда передаётся напрямую (resolveUri)
+        return when {
+            value.contains('/') -> {
+                val slash = value.indexOf('/')
+                val source = value.substring(0, slash)
+                val trackId = value.substring(slash + 1)
+                if (source.isBlank() || trackId.isBlank()) null else "$source:$trackId"
+            }
+            value.contains(':') -> value.takeIf { it.isNotBlank() }
+            else -> null
+        }
+    }
 
     override fun validateId(id: String): Boolean {
         // ID format: "source:trackId" (trackId itself may contain colons, e.g. Spotify URIs)
@@ -49,7 +65,17 @@ class MrbifyStreamProxy @Inject constructor(
         return source.isNotBlank() && trackId.isNotBlank()
     }
 
-    override fun formatIdForUrl(id: String): String = id
+    /**
+     * Конвертируем внутренний формат "source:trackId" → URL-путь "source/trackId".
+     * Это безопасно в URL-пути и нативно обрабатывается Ktor wildcard.
+     */
+    override fun formatIdForUrl(id: String): String {
+        val colonIndex = id.indexOf(':')
+        if (colonIndex <= 0) return id
+        val source = id.substring(0, colonIndex)
+        val trackId = id.substring(colonIndex + 1)
+        return "$source/$trackId"
+    }
 
     override suspend fun resolveStreamUrl(id: String): String? {
         val colonIndex = id.indexOf(':')
@@ -73,29 +99,22 @@ class MrbifyStreamProxy @Inject constructor(
         return ssp.takeIf { it.contains(":") && it.isNotBlank() }
     }
 
-    fun resolveMrbifyUri(uriString: String): String? {
-        // Ensure proper parsing. "mrbify://soundcloud:12345"
-        // android.net.Uri parse might treat "soundcloud" as host, port as 12345.
-        // Let's use a simpler path based approach: mrbify:///soundcloud/12345
-        if (uriString.startsWith("mrbify://")) {
-            val uri = Uri.parse(uriString)
-            val host = uri.host
-            val pathId = uri.path?.removePrefix("/")
-            if (host != null) {
-                if (pathId.isNullOrBlank()) {
-                    // It might have been parsed differently
-                    val schemeSpecificPart = uri.schemeSpecificPart.removePrefix("//")
-                    // e.g. schemeSpecificPart is "soundcloud:12345"
-                    return resolveUri("mrbify", schemeSpecificPart)
-                }
-            }
-        }
-        return resolveUri(uriString)
+    /**
+     * Ktor даёт нам {source} и {trackId...} как отдельные параметры.
+     * Собираем их в "source/trackId" — parseRouteParam затем конвертирует в "source:trackId".
+     */
+    override fun extractIdFromCallParameters(
+        params: io.ktor.server.routing.RoutingCall
+    ): String? {
+        val source = params.parameters["source"] ?: return null
+        val trackId = params.parameters.getAll("trackId")?.joinToString("/") ?: return null
+        if (source.isBlank() || trackId.isBlank()) return null
+        return "$source/$trackId"
     }
-    
-    /** Custom resolve helper. */
-    private fun resolveUri(scheme: String, id: String): String? {
-        if (!validateId(id)) return null
-        return getProxyUrl(id)
+
+    fun resolveMrbifyUri(uriString: String): String? {
+        // Delegate to the base class resolveUri which uses extractIdFromUri internally.
+        // extractIdFromUri now correctly handles all ID formats via schemeSpecificPart.
+        return resolveUri(uriString)
     }
 }
