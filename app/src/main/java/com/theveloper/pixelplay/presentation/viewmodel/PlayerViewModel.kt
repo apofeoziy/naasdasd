@@ -717,7 +717,26 @@ class PlayerViewModel @Inject constructor(
 
     // Public read-only access to all songs (using _masterAllSongs declared at class level)
     // Library State - delegated to LibraryStateHolder
-    val allSongsFlow: StateFlow<ImmutableList<Song>> = libraryStateHolder.allSongs
+    // Merges local device songs with cloud (Mrbify) tracks so they can be played from
+    // history, likes, and playlists without requiring a separate lookup path.
+    val allSongsFlow: StateFlow<ImmutableList<Song>> = combine(
+        libraryStateHolder.allSongs,
+        libraryStateHolder.mrbifyHistory,
+        libraryStateHolder.mrbifyLikes
+    ) { localSongs, cloudHistory, cloudLikes ->
+        val merged = LinkedHashMap<String, Song>(localSongs.size + cloudHistory.size + cloudLikes.size)
+        // Local songs first (highest priority — they have real file paths)
+        for (song in localSongs) merged[song.id] = song
+        // Cloud history — add only if not already present (avoids duplicating local tracks)
+        for (song in cloudHistory) merged.putIfAbsent(song.id, song)
+        // Cloud likes — same dedup logic
+        for (song in cloudLikes) merged.putIfAbsent(song.id, song)
+        merged.values.toImmutableList()
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = persistentListOf()
+    )
 
     // Genres StateFlow - delegated to LibraryStateHolder
     val genres: StateFlow<ImmutableList<Genre>> = libraryStateHolder.genres
